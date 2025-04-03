@@ -11,8 +11,32 @@ export interface Task{
 @Injectable({
   providedIn: 'root'
 })
+
 export class TasksService {
 
+  private TASK_KEY = 'tasks';
+
+  async addTask(task:Task): Promise<void>{
+
+    const tasks = await this.getTasks() || [];
+
+    tasks.push(task);
+
+    await Preferences.set({
+      key: this.TASK_KEY,
+      value: JSON.stringify(task)
+    });
+
+
+  }
+
+  async getTasks(): Promise<Task[]>{
+    const {value} = 
+    await Preferences.get({key: this.TASK_KEY});
+
+    return value ? JSON.parse(value) : [];
+  
+  }
 
 
 
