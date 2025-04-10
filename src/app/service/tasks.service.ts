@@ -19,12 +19,12 @@ export class TasksService {
   async addTask(task:Task): Promise<void>{
 
     const tasks = await this.getTasks() || [];
-
+    //await Preferences.remove({ key: 'tasks' }); //remover as preferences
     tasks.push(task);
 
     await Preferences.set({
       key: this.TASK_KEY,
-      value: JSON.stringify(task)
+      value: JSON.stringify(tasks)
     });
 
 
